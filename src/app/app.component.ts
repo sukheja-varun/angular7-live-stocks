@@ -16,13 +16,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this._socketService.initSocket();
-    this._socketService.onMessage().subscribe((data) => {
+    this._socketService.onMessage().subscribe((data: Array<[string, number]>) => {
       console.log('data', data);
       this.updateStocksMap(data);
     });
   }
 
-  updateStocksMap(wsData: []) {
+  updateStocksMap(wsData: Array<[string, number]>) {
     wsData.forEach((element) => {
       let name = element[0];
       let price = element[1];

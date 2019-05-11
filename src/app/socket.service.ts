@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 export class SocketService {
   private ws: WebSocket;
   private readonly SOCKET_URL = 'ws://stocks.mnet.website';
-  private subject = new Subject<any>();
+  private subject = new Subject<Array<[string, number]>>();
 
   constructor() { }
 

@@ -11,10 +11,19 @@ export class SocketService {
 
   constructor() { }
 
+  /**
+   * @description initialises a connection to the websocket
+   * Also when connection is closed it resets the ws variable
+   */
   initSocket(): void {
     this.ws = new WebSocket(this.SOCKET_URL);
+    this.ws.onclose = (evt) => this.ws = null;
   }
 
+  /**
+   * @description it listens to the messages sent by web socket
+   * and sends it to the observer
+   */
   onMessage() {
     if (!this.ws) {
       this.initSocket();
@@ -22,5 +31,12 @@ export class SocketService {
 
     this.ws.onmessage = (evt) => this.subject.next(evt.data);
     return this.subject.asObservable();
+  }
+
+  /**
+   * @description it closes the web socket connection
+   */
+  close() {
+    this.ws.close();
   }
 }

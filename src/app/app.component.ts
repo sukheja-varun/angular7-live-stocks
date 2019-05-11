@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SocketService } from './socket.service';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular7-live-stocks';
-  socketUrl = 'ws://stocks.mnet.website';
-  ws: WebSocket;
 
-  constructor() {
-    this.ws = new WebSocket(this.socketUrl);
-    this.ws.onmessage = function (evt) {
-      let received_msg = evt.data;
-      console.log("Message is received...", received_msg);
-    };
+  constructor(private _socketService: SocketService) {
+    this._socketService.initSocket();
+    this._socketService.onMessage().subscribe((data) => {
+      console.log('data', data);
+    });
   }
 }

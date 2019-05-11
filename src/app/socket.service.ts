@@ -29,7 +29,7 @@ export class SocketService {
       this.initSocket();
     }
 
-    this.ws.onmessage = (evt) => this.subject.next(evt.data);
+    this.ws.onmessage = (evt) => this.subject.next(JSON.parse(evt.data));
     return this.subject.asObservable();
   }
 

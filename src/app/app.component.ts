@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from './socket.service';
+import { Stock } from './stock.model';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { SocketService } from './socket.service';
 })
 export class AppComponent implements OnInit {
   title = 'angular7-live-stocks';
-  stocksMap = new Map();
+  stocksMap = new Map<string, Stock>();
 
   constructor(private _socketService: SocketService) {
   }
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit {
         elementInMap.price = price;
         this.stocksMap.set(name, elementInMap);
       } else {
-        this.stocksMap.set(name, { name: name, price: price, diff: 0, updatedAt: new Date() });
+        let newElement = { name: name, price: price, diff: 0, updatedAt: new Date() };
+        this.stocksMap.set(name, newElement);
       }
     });
 

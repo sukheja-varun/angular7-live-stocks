@@ -7,6 +7,20 @@
 
   .header {
     grid-area: h;
+    background-color: #c0c0c0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    border-radius: 12px;
+    .logo-section {
+      .brand_logo {
+        width: 250px;
+      }
+      div {
+        text-align: center;
+      }
+    }
   }
 
   .content {

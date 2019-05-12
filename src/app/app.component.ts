@@ -8,20 +8,31 @@ import { Stock } from './stock.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'angular7-live-stocks';
+  upArrow: string = '../assets/images/up-arrow.png';
+  downArrow: string = '../assets/images/down-arrow.png';
   stocksMap = new Map<string, Stock>();
 
   constructor(private _socketService: SocketService) {
   }
 
+  /**
+   * @description initializes socket connection and call onMessage
+   * to start getting messages from web socket
+   */
   ngOnInit(): void {
     this._socketService.initSocket();
-    this._socketService.onMessage().subscribe((data: Array<[string, number]>) => {
-      console.log('data', data);
-      this.updateStocksMap(data);
-    });
+    this._socketService.onMessage()
+      .subscribe((data: Array<[string, number]>) => {
+        this.updateStocksMap(data);
+      });
   }
 
+  /**
+   * @description it stores web socket data into map
+   * If an entry is already present in Map then it updates it
+   * else inserts a new entry into Map
+   * @param wsData : array of stocks data received from web socket
+   */
   updateStocksMap(wsData: Array<[string, number]>) {
     wsData.forEach((element) => {
       let name = element[0];
@@ -38,7 +49,5 @@ export class AppComponent implements OnInit {
         this.stocksMap.set(name, newElement);
       }
     });
-
-    console.log('map', this.stocksMap);
   }
 }
